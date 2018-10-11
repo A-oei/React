@@ -1,0 +1,14 @@
+module.exports={
+  entry:'index.json', //入口文件
+  output:{
+    path:'__dirname',
+    filename:'bundle.js', //打包后文件名字
+  },
+  devtool:'source-map', //指定调试工具，方便调试
+  module:{  //使用到的模块
+    loaders:[   //指定loader
+      {test:/\.css$/,loader:'style!css'},
+      {test:/\.js$/,loader:'react-hot!babel',exclude:'/node_modules/'}, //exclude排除node_modules文件夹下的js文件
+    ]
+  }
+};

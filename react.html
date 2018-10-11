@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>Hello World</title>
+    <!--本地代码-->
+    <!--cdn引用-->
+    <!--react.js语法核心库-->
+    <script src="./build/react.js"></script>
+    <!--<script src="https://unpkg.com/react@16/umd/react.development.js"></script>-->
+    <!--提供与DOM相关的功能-->
+    <script src="./build/react-dom.js"></script>
+    <!--<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>-->
+    <!--将JSX语法转化为javascript语法-->
+    <script src="./build/browser.min.js"></script>
+    <!--<script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>-->
+    <style>
+        .parent {
+            width: 100px;
+            height: 100px;
+            background-color: red;
+
+        }
+
+        .child {
+            width: 50px;
+            height: 50px;
+            background-color: yellow;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .yellow {
+            color: yellowgreen;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            margin-top: 50px;
+            background-color: darkolivegreen;
+        }
+
+        .child{
+            width: 50%;
+            height: 50%;
+            color: aliceblue;
+            background-color: darkgreen;
+        }
+    </style>
+</head>
+<body>
+<!--react渲染的模板内容会插入到这个DOM的节点中，可以理解为一个容器-->
+<!--vue #app-->
+<div id="root">
+</div>
+
+
+<!--在React的开发中，使用jsx和javascript语法不兼容，在使用jsx的地方，设置type='text/babel' 防止被js引擎解析-->
+<!--使用模板时候我们设置 type='text/template'-->
+<script type="text/babel">
+
+
+    // class HelloMessage extends React.Component{
+    //     render(){
+    //         return <h1>hello React</h1>
+    //     }
+    // }
+    //  function HelloMessage() {
+    //      return <h1>hello React</h1>
+    //  }
+
+    // ReactDOM.render(
+    //     HelloMessage(),
+    //     document.getElementById('root'),
+    //     (e)=>{
+    //         console.log(e);
+    //         console.log('hello world')
+    //     }
+    // );
+
+    //组件的使用 通信| 属性、状态
+    //属性，固定的 | 状态、可变的
+    /*
+    <!--class Comp extends React.Component {-->
+    <!--constructor(...args) {-->
+    <!--super(...args);-->
+    <!--this.state = {value: ""}-->
+    <!--this.aaa={blue:""}-->
+    <!--}-->
+
+    <!--fn(e) {-->
+    <!--console.log(this);-->
+    <!--this.setState({-->
+    <!--value:e.target.value-->
+    <!--})-->
+    <!--}-->
+
+    <!--render() {-->
+    <!--return <div>-->
+    // <!--<h1>{this.props.name}</h1>-->
+    <!--<input type="text" onInput={this.fn.bind(this)}/>-->
+    // <!--<p>{this.state.value}</p>-->
+    // <!--</div>-->
+    <!--}-->
+    <!--}-->
+
+    // ReactDOM.render(
+    //     <Comp name="hello world"/>,
+    //     document.querySelector("#root")
+    // )
+*/
+    /*
+    //点击显示隐藏
+    //对于定义的state可以直接通过this.state.属性的方式来读取，但是不能通过this.state.属性的方式来写。需要使用this.setState的方式来写
+    class Comp extends React.Component {
+        constructor(...arg) {
+            super(...arg);
+            this.state = {
+                display: 'block'
+            }
+        }
+
+        fn() {
+            this.setState({
+                display: this.state.display == "block" ? "none" : "block"
+            })
+        }
+
+        render() {
+            return <div>
+                <input type="button" value="show/hide" onClick={this.fn.bind(this)}/>
+                <div className="box" style={{display: this.state.display}}></div>
+            </div>
+        }
+    }
+
+    ReactDOM.render(
+        <Comp/>,
+        document.querySelector("#root")
+    )
+    */
+    //组件的生命周期
+    /*
+    componentWillMount 创建之前
+    componentDidMount   创建之前
+
+    componetWillUpdate 更新之前
+    componentDidUpdate 更新之后
+
+    componentWillUnmount  卸载之前
+    componentWillReceiveProps 组件参数更新
+
+    在constructor只能赋值，不能调用方法，相当于正在创建之初
+    */
+    //计时器
+    /*
+    class DateComponent extends React.Component {
+        constructor(...args) {
+            super(...args);
+
+            this.state = {
+                h: 0,
+                m: 0,
+                s: 0
+            }
+
+
+        }
+
+        tick() {
+            var oDate = new Date();
+
+            this.setState({
+                h: oDate.getHours(),
+                m: oDate.getMinutes(),
+                s: oDate.getSeconds()
+            })
+        }
+
+        componentDidMount() {
+            setInterval(()=>{
+                this.tick()
+            },1000)
+        }
+
+        componentWillUpdate(e){
+            //console.log(e);
+            console.log("即将更新")
+        }
+        compon entDidUpdate(e){
+            //console.log(this.state);
+            console.log("更新完成")
+        }
+
+        render() {
+            return <div>
+                <span>{this.state.h}：</span>
+                <span>{this.state.m}：</span>
+                <span>{this.state.s}</span>
+            </div>
+        }
+    }
+
+    ReactDOM.render(
+        <DateComponent/>,
+        document.querySelector("#root")
+    )
+    */
+    /*
+    //组件嵌套、componentWillReceiveProps组件周期
+    class ChildComp extends React.Component {
+        componentWillReceiveProps() {
+            console.log("参数更新了")
+        }
+
+        render() {
+            return <span>{this.props.data}</span>
+        }
+    }
+
+    class ParentComp extends React.Component {
+        constructor(...args) {
+            super(...args);
+
+            this.state = {
+                i: 0
+            }
+        }
+
+        fn() {
+            this.setState({
+                i: this.state.i + 1
+            })
+        }
+
+        render() {
+
+            return <div>
+                <input type="button" value="change" onClick={this.fn.bind(this)}/>
+                <ChildComp data={this.state.i}/>
+            </div>
+
+        }
+    }
+
+    ReactDOM.render(
+        <ParentComp/>,
+        document.querySelector("#root")
+    )
+    */
+
+    //列表
+    //react中没有v-for/ng-repeat等方法，需要我们手动去使用map等方法进行遍历
+    /*
+    class Item extends React.Component {
+        constructor(...args) {
+            super(...args)
+        }
+
+        fn(e,v) {
+            console.log(e)
+            console.log(v);
+        }
+
+
+        render() {
+            return <li onClick={this.fn.bind(this,"hello")}>{this.props.value}</li>
+        }
+    }
+
+    class List extends React.Component {
+        constructor(...args) {
+            super(...args);
+
+            this.state = {
+                lists: ["xm", "xh", "xq"]
+            }
+        }
+
+        render() {
+            let result = [];
+
+            this.state.lists.map((v, i) => {
+                result.push(<Item value={v} key={i}/>)
+            })
+
+            return <ul>
+                {result}
+            </ul>
+        }
+    }
+
+    ReactDOM.render(
+        <List/>,
+        document.querySelector("#root")
+    )
+    */
+
+    /*
+    // ReactDOM.render
+    // react的基本用法，用于将模板转换成为html语言，渲染dom，并插入到节点中
+    // 该方法支持3个参数
+    // 1. 模板的渲染内容，是一个html形式的， <h1>Hello, world!</h1>,
+    // 2. 模板需要插入的节点 document.getElementById('root')
+    // 3. 渲染后的回调函数
+    /*
+    (e)=>{
+    console.log(e);
+    console.log('hello world')
+    }
+    */
+    /*
+    关于jsx
+        1. jsx不是一门新的语言，而是一个语法糖
+        2. jsx标签其实就是html标签，只需要我们像xml一样书写，能够更直观的让我们能看到dom结构
+        jsx最终被编译为js语法，实际如下
+        ReactDOM.render(
+        React.createElement('h1',null,'hello world',React.createElement('p',null,'hello React')),
+        document.getElementById('root'),
+        e=>{
+            console.log('hello react')
+        }
+        )
+        3. 在jsx中运行javascript代码，将js代码使用{}括起来
+        const text='Hello World!';
+        ReactDOM.render(
+            <h1>{text}</h1>,
+            document.getElementById('root'),
+            (e)=>{
+                console.log(e);
+                console.log('hello world')
+            }
+        );
+     */
+    //组件
+    /*
+    1. React中创建的组建类以大写字母开头，驼峰命名法
+    2. 组件只能包含一个顶层标签
+    3. 在React中目前已经抛弃了React.createClass的方法（React.createClass is not a function）
+    const HelloMessage=React.createClass({
+        render(){
+            return <h1>Hello React</h1>;
+        }
+    })
+    4. 目前推荐的两种写法
+        4.1 const HelloMessage=<h1>hello word</h1>;
+
+            ReactDOM.render(
+                HelloMessage,
+                document.getElementById('root'),
+                (e)=>{
+                    console.log(e);
+                    console.log('hello world')
+                }
+            );
+
+        4.2  使用es6语法继承React.Component{
+            render(){
+                return
+            }
+        }
+    */
+
+    /*
+    使用组件
+
+        组件属性
+
+    */
+
+
+</script>
+<script type="text/babel">
+    class FancyBorder extends React.Component {
+        render() {
+            return (
+                <div className="box">
+                    <div className="child">
+                        {this.props.one}
+                    </div>
+                    {this.props.two}
+                </div>
+            )
+        }
+    }
+    ReactDOM.render(
+        <FancyBorder
+            one={
+                <p>Lorem ipsum dolor sit amet.</p>
+            }
+            two={
+                <p>Lorem ipsum dolor.</p>
+            }
+        />,
+        document.querySelector("#root")
+    )
+</script>
+</body>
+</html>
